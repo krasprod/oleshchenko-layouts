@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Володимир Олещенко · три варіанти сітки проєктів</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#0a0a0a; --muted:#8a8a8a; --line:#e8e2e2;
+  --red:#ff0800; --blue:#0059ff; --soft:#f8eaea;
+  --pad:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spacing:-0.02em}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topin{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:12px var(--pad)}
+.brand{font-family:Manrope;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.brand span{color:var(--red)}
+.tabs{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.tab{font-family:Manrope;font-weight:700;font-size:12.5px;letter-spacing:.02em;padding:8px 14px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:.18s;white-space:nowrap}
+.tab:hover{border-color:var(--ink)}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.addbtn{font-family:Manrope;font-weight:800;font-size:12.5px;padding:8px 14px;border:1px solid var(--red);color:var(--red);background:#fff;cursor:pointer;transition:.18s;white-space:nowrap}
+.addbtn:hover{background:var(--red);color:#fff}
+
+/* ---------- intro ---------- */
+.intro{padding:clamp(28px,6vw,64px) var(--pad) 8px;max-width:980px}
+.intro h1{font-size:clamp(26px,4.6vw,46px);line-height:1.05;margin:0 0 18px}
+.intro p{margin:0 0 12px;max-width:66ch;color:#333}
+.intro .note{color:var(--muted);font-size:13.5px}
+.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:2px 6px}
+
+.bar{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:18px var(--pad);border-bottom:1px solid var(--line);margin-top:18px}
+.filters{display:flex;gap:6px}
+.f{font-size:12.5px;font-family:Manrope;font-weight:700;padding:6px 12px;border:1px solid var(--line);cursor:pointer;background:#fff;transition:.18s}
+.f:hover{border-color:var(--ink)}
+.f.on{background:var(--soft);border-color:var(--red);color:var(--red)}
+.count{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+
+.vtitle{padding:clamp(26px,5vw,52px) var(--pad) 6px}
+.vtitle h2{font-size:clamp(19px,2.6vw,26px);margin:0 0 6px}
+.vtitle p{margin:0;color:var(--muted);max-width:62ch;font-size:14px}
+.view{display:none}
+.view.on{display:block}
+
+/* ---------- V1 modular grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.6vw,22px);padding:clamp(18px,3vw,32px) var(--pad) clamp(50px,8vw,110px)}
+.card{grid-column:span 4;position:relative;display:block}
+.card .ph{position:relative;overflow:hidden;background:var(--soft)}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.045)}
+.card .meta{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding-top:10px}
+.card .nm{font-family:Manrope;font-weight:700;font-size:15px;transition:color .18s}
+.card:hover .nm{color:var(--red)}
+.card .tg{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.card.s-l{grid-column:span 6}
+.card.s-m{grid-column:span 4}
+.card.s-s{grid-column:span 3}
+.card.r-1 .ph{aspect-ratio:1/1}
+.card.r-4 .ph{aspect-ratio:4/3}
+.card.r-3 .ph{aspect-ratio:3/4}
+.card.r-w .ph{aspect-ratio:16/10}
+.isnew::after{content:"нова";position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-family:Manrope;font-weight:800;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;z-index:3}
+
+/* ---------- V2 index list ---------- */
+.list{padding:clamp(10px,2vw,20px) var(--pad) clamp(50px,8vw,110px)}
+.row{display:grid;grid-template-columns:52px 1fr auto 96px;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);position:relative;cursor:pointer}
+.row:first-child{border-top:1px solid var(--line)}
+.row .num{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)}
+.row .nm{font-family:Manrope;font-weight:800;font-size:clamp(20px,3.4vw,38px);line-height:1;letter-spacing:-.02em;transition:.25s;position:relative;z-index:2}
+.row .rl{font-size:12.5px;color:var(--muted)}
+.row .go{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;transition:.2s}
+.row:hover .nm{color:var(--red);transform:translateX(10px)}
+.row:hover .go{color:var(--red)}
+.row .thumb{display:none}
+#peek{position:fixed;width:230px;height:172px;pointer-events:none;z-index:80;opacity:0;transform:translate(-50%,-50%) scale(.92);transition:opacity .18s,transform .28s cubic-bezier(.2,.7,.2,1);overflow:hidden;background:var(--soft)}
+#peek img{width:100%;height:100%;object-fit:cover;display:block}
+#peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.row.isnew .nm::after{content:"нова";vertical-align:super;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-left:10px}
+
+/* ---------- V3 horizontal ---------- */
+.pin{position:relative}
+.pinin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.4vw,30px);overflow:hidden}
+.hrow{display:flex;gap:clamp(10px,1.4vw,20px);will-change:transform;padding:0 var(--pad)}
+.hcard{flex:0 0 auto;width:clamp(180px,20vw,268px)}
+.hcard .ph{overflow:hidden;background:var(--soft);aspect-ratio:1/1}
+.hcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.hcard:hover img{transform:scale(1.05)}
+.hcard .nm{font-family:Manrope;font-weight:700;font-size:13.5px;padding-top:8px;transition:color .18s}
+.hcard:hover .nm{color:var(--red)}
+.hcard.isnew .ph::after{content:"нова";position:absolute;margin:10px;background:var(--red);color:#fff;font-family:Manrope;font-weight:800;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px}
+.hcard .ph{position:relative}
+.rowlab{position:absolute;left:var(--pad);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hint{padding:0 var(--pad) 26px;color:var(--muted);font-size:13px}
+.progress{position:absolute;left:var(--pad);right:var(--pad);bottom:34px;height:2px;background:var(--line)}
+.progress i{display:block;height:100%;width:0;background:var(--red)}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding:clamp(30px,5vw,60px) var(--pad);color:var(--muted);font-size:13px}
+.foot b{color:var(--ink);font-family:Manrope}
+
+@media (max-width:760px){
+  .card.s-l,.card.s-m,.card.s-s{grid-column:span 6}
+  .row{grid-template-columns:34px 1fr;row-gap:6px}
+  .row .rl,.row .go{grid-column:2;text-align:left}
+  .row .nm{font-size:26px}
+  .row:hover .nm{transform:none}
+  #peek{display:none}
+  .row .thumb{display:block;grid-column:1/-1;aspect-ratio:16/9;overflow:hidden;background:var(--soft);margin-top:8px}
+  .row .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topin">
+    <div class="brand">Володимир Олещенко <span>· сітка проєктів</span></div>
+    <div class="tabs">
+      <button class="tab on" data-v="1">1 · модульна сітка</button>
+      <button class="tab" data-v="2">2 · список з прев'ю</button>
+      <button class="tab" data-v="3">3 · автогоризонталь</button>
+      <button class="addbtn" id="add">+ додати роботу</button>
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>Три варіанти розкладки на ваших же обкладинках</h1>
+  <p>Зараз на сайті картки стоять на координатах: у комерційних 17 квадратів по 238 пікселів з кроком 262, довжина ряду 5499 пікселів. Тому нова робота тягне за собою зсув усіх наступних карток і переналаштування скролу.</p>
+  <p>Тут картки лежать у потоці і рахують позиції самі. Натисніть <span class="kbd">+ додати роботу</span> у будь-якому варіанті: нова картка стає на місце, сітка перебудовується, анімація не злітає. У робочій версії додавання виглядає як один рядок у вашому списку.</p>
+  <p class="note">Підписи під картками умовні, беруться з назв ваших кейсів. Обкладинки і посилання справжні, з вашого сайту.</p>
+</section>
+
+<div class="bar">
+  <div class="filters">
+    <button class="f on" data-f="all">усі</button>
+    <button class="f" data-f="c">комерційні</button>
+    <button class="f" data-f="s">соціальні</button>
+  </div>
+  <div class="count" id="count"></div>
+</div>
+
+<!-- V1 -->
+<section class="view on" id="v1">
+  <div class="vtitle">
+    <h2>Варіант 1. Модульна сітка</h2>
+    <p>Картки різного розміру за повторюваним ритмом, обкладинка плюс назва. Читається як журнальний розворот, а не як таблиця. Нова робота просто продовжує ритм.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- V2 -->
+<section class="view" id="v2">
+  <div class="vtitle">
+    <h2>Варіант 2. Список-індекс з прев'ю під курсором</h2>
+    <p>Спершу читаються слова, обкладинка спливає під курсором. Для копірайтера це працює сильніше за плитки, і рядок додається одним рухом.</p>
+  </div>
+  <div class="list" id="list"></div>
+</section>
+
+<!-- V3 -->
+<section class="view" id="v3">
+  <div class="vtitle">
+    <h2>Варіант 3. Горизонталь, але автоматична</h2>
+    <p>Ваш рух убік зберігається, тільки ряд сам рахує свою довжину і крок, а два рівні їдуть з різною швидкістю. Прокрутіть сторінку вниз.</p>
+  </div>
+  <div class="hint">Комерційні їдуть уліво, соціальні назустріч. Додайте роботу просто зараз і подивіться, що довжина скролу підлаштується сама.</div>
+  <div class="pin" id="pin">
+    <div class="pinin">
+      <div class="hrow" id="hrow1"></div>
+      <div class="hrow" id="hrow2"></div>
+      <div class="progress"><i id="prg"></i></div>
+    </div>
+  </div>
+</section>
+
+<div id="peek"><img alt=""></div>
+
+<footer class="foot">
+  <p><b>Що це означає на практиці.</b> У Readymag рідні віджети завжди стоять на координатах, тому таку сітку збирають одним блоком коду всередині вашого ж проєкту. Решта сайту, шапка, сторінки кейсів і мобільна версія лишаються як є.</p>
+  <p>Демо зроблено для обговорення варіантів. Обкладинки належать Володимиру Олещенку.</p>
+</footer>
+
+<script>
+const WORKS = [{"title": "KFC", "cat": "c", "img": "kfc.webp", "url": "https://portfolio.oleshchenko.com/"}, {"title": "Granatomed", "cat": "c", "img": "granatomed.webp", "url": "https://portfolio.oleshchenko.com/granatomed/"}, {"title": "Spraga", "cat": "c", "img": "spraga.webp", "url": "https://portfolio.oleshchenko.com/spraga/"}, {"title": "Sushiya", "cat": "c", "img": "sushiya.webp", "url": "https://portfolio.oleshchenko.com/sushiya/"}, {"title": "Rewish", "cat": "c", "img": "rewish.webp", "url": "https://portfolio.oleshchenko.com/rewish/"}, {"title": "Epicur", "cat": "c", "img": "epikur.webp", "url": "https://portfolio.oleshchenko.com/epikur/"}, {"title": "W8", "cat": "c", "img": "w8.webp", "url": "https://portfolio.oleshchenko.com/w8/"}, {"title": "Englishdom", "cat": "c", "img": "englishdom.webp", "url": "https://portfolio.oleshchenko.com/englishdom/"}, {"title": "Seeds of Bravery", "cat": "c", "img": "seeds.webp", "url": "https://portfolio.oleshchenko.com/seeds/"}, {"title": "New Food Summit", "cat": "c", "img": "newfoodsummit.webp", "url": "https://portfolio.oleshchenko.com/newfoodsummit/"}, {"title": "Sushipost", "cat": "c", "img": "sushipost.webp", "url": "https://portfolio.oleshchenko.com/sushipost/"}, {"title": "How Cow", "cat": "c", "img": "howcow.webp", "url": "https://portfolio.oleshchenko.com/howcow/"}, {"title": "Karasi Biznesy", "cat": "c", "img": "karasi.webp", "url": "https://portfolio.oleshchenko.com/karasi/"}, {"title": "Botreba", "cat": "c", "img": "botreba.webp", "url": "https://portfolio.oleshchenko.com/botreba/"}, {"title": "Petstop", "cat": "c", "img": "petstop.webp", "url": "https://portfolio.oleshchenko.com/petstop/"}, {"title": "SelpMe", "cat": "c", "img": "selpme.webp", "url": "https://portfolio.oleshchenko.com/selpme/"}, {"title": "Yep!", "cat": "c", "img": "yep.webp", "url": "https://portfolio.oleshchenko.com/yep/"}, {"title": "Brama", "cat": "s", "img": "brama.webp", "url": "https://portfolio.oleshchenko.com/brama/"}, {"title": "Burning Man 2023", "cat": "s", "img": "phoenix.webp", "url": "https://portfolio.oleshchenko.com/phoenix/"}, {"title": "DIA", "cat": "s", "img": "diaosvita.webp", "url": "https://portfolio.oleshchenko.com/diaosvita/"}, {"title": "Suhoputka", "cat": "s", "img": "recruitment.webp", "url": "https://portfolio.oleshchenko.com/recruitment/"}, {"title": "Unovation", "cat": "s", "img": "unovation.webp", "url": "https://portfolio.oleshchenko.com/unovation/"}, {"title": "Prostoneba", "cat": "s", "img": "prostoneba.webp", "url": "https://portfolio.oleshchenko.com/prostoneba/"}, {"title": "Rise of Ukraine", "cat": "s", "img": "riseofukraine.webp", "url": "https://portfolio.oleshchenko.com/riseofukraine/"}, {"title": "Blood Brothers", "cat": "s", "img": "bloodbrothers.webp", "url": "https://portfolio.oleshchenko.com/bloodbrothers/"}];
+let works = WORKS.slice();
+let filter = 'all';
+let added = 0;
+
+const SPAN = ['s-l r-w','s-s r-1','s-s r-3','s-m r-1','s-m r-4','s-l r-4','s-s r-1','s-m r-3','s-s r-1'];
+const CAT  = {c:'комерційний', s:'соціальний'};
+
+const $ = s => document.querySelector(s);
+const vis = () => works.filter(w => filter === 'all' || w.cat === filter);
+
+function cardHTML(w, i){
+  return `<a class="card ${SPAN[i % SPAN.length]} ${w.isnew?'isnew':''}" href="${w.url}" target="_blank" rel="noopener">
+    <div class="ph"><img loading="lazy" src="img/${w.img}" alt="${w.title}"></div>
+    <div class="meta"><span class="nm">${w.title}</span><span class="tg">${CAT[w.cat]}</span></div>
+  </a>`;
+}
+function rowHTML(w, i){
+  return `<a class="row ${w.isnew?'isnew':''}" href="${w.url}" target="_blank" rel="noopener" data-img="img/${w.img}">
+    <span class="num">${String(i+1).padStart(2,'0')}</span>
+    <span class="nm">${w.title}</span>
+    <span class="rl">${CAT[w.cat]}</span>
+    <span class="go">дивитися</span>
+    <span class="thumb"><img loading="lazy" src="img/${w.img}" alt=""></span>
+  </a>`;
+}
+function hcardHTML(w){
+  return `<a class="hcard ${w.isnew?'isnew':''}" href="${w.url}" target="_blank" rel="noopener">
+    <div class="ph"><img loading="lazy" src="img/${w.img}" alt="${w.title}"></div>
+    <div class="nm">${w.title}</div>
+  </a>`;
+}
+
+function render(){
+  const v = vis();
+  $('#grid').innerHTML = v.map(cardHTML).join('');
+  $('#list').innerHTML = v.map(rowHTML).join('');
+  const c = works.filter(w => w.cat === 'c' && (filter === 'all' || filter === 'c'));
+  const s = works.filter(w => w.cat === 's' && (filter === 'all' || filter === 's'));
+  $('#hrow1').innerHTML = (c.length?c:v).map(hcardHTML).join('');
+  $('#hrow2').innerHTML = (s.length?s:v).map(hcardHTML).join('');
+  $('#count').textContent = `робіт у сітці: ${v.length}` + (added ? `  ·  додано щойно: ${added}` : '');
+  bindPeek();
+  requestAnimationFrame(measure);
+}
+
+/* peek preview */
+const peek = $('#peek'), peekImg = peek.querySelector('img');
+function bindPeek(){
+  document.querySelectorAll('#list .row').forEach(r => {
+    r.addEventListener('mouseenter', () => { peekImg.src = r.dataset.img; peek.classList.add('on'); });
+    r.addEventListener('mouseleave', () => peek.classList.remove('on'));
+  });
+}
+addEventListener('mousemove', e => {
+  peek.style.left = e.clientX + 'px';
+  peek.style.top  = e.clientY + 'px';
+});
+
+/* horizontal pinned rows */
+let pinTop = 0, pinLen = 0, over1 = 0, over2 = 0;
+function measure(){
+  const pin = $('#pin');
+  if (!pin || !$('#v3').classList.contains('on')) return;
+  const r1 = $('#hrow1'), r2 = $('#hrow2');
+  r1.style.transform = 'translateX(0)'; r2.style.transform = 'translateX(0)';
+  const vw = innerWidth;
+  over1 = Math.max(0, r1.scrollWidth - vw);
+  over2 = Math.max(0, r2.scrollWidth - vw);
+  pinLen = Math.max(over1, over2) * 1.15;
+  pin.style.height = (innerHeight + pinLen) + 'px';
+  pinTop = pin.getBoundingClientRect().top + scrollY;
+  onScroll();
+}
+function onScroll(){
+  if (!$('#v3').classList.contains('on') || !pinLen) return;
+  const p = Math.min(1, Math.max(0, (scrollY - pinTop) / pinLen));
+  $('#hrow1').style.transform = `translateX(${-p * over1}px)`;
+  $('#hrow2').style.transform = `translateX(${-(1 - p) * over2}px)`;
+  $('#prg').style.width = (p * 100) + '%';
+}
+addEventListener('scroll', onScroll, {passive:true});
+addEventListener('resize', measure);
+
+/* tabs, filters, add */
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+  t.classList.add('on');
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  $('#v' + t.dataset.v).classList.add('on');
+  scrollTo({top:0, behavior:'instant'});
+  requestAnimationFrame(measure);
+}));
+document.querySelectorAll('.f').forEach(f => f.addEventListener('click', () => {
+  document.querySelectorAll('.f').forEach(x => x.classList.remove('on'));
+  f.classList.add('on'); filter = f.dataset.f; render();
+}));
+$('#add').addEventListener('click', () => {
+  added++;
+  const src = WORKS[(added * 7) % WORKS.length];
+  works.push({...src, title:'Нова робота ' + added, isnew:true});
+  render();
+  const host = $('#v1').classList.contains('on') ? '#grid .card.isnew' :
+               $('#v2').classList.contains('on') ? '#list .row.isnew' : '#hrow1 .hcard';
+  const el = document.querySelectorAll(host);
+  if (el.length) el[el.length-1].scrollIntoView({behavior:'smooth', block:'center'});
+});
+
+render();
+</script>
+</body>
+</html>
