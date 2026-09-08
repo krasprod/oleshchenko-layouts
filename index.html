@@ -12,7 +12,7 @@
 :root{
   --bg:#ffffff; --ink:#0a0a0a; --muted:#8a8a8a; --line:#e8e2e2;
   --red:#ff0800; --blue:#0059ff; --soft:#f8eaea;
-  --pad:clamp(16px,4vw,56px);
+  --pad:clamp(16px,4vw,56px); --gap:clamp(10px,1.6vw,22px);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -36,6 +36,7 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .intro{padding:clamp(28px,6vw,64px) var(--pad) 8px;max-width:980px}
 .intro h1{font-size:clamp(26px,4.6vw,46px);line-height:1.05;margin:0 0 18px}
 .intro p{margin:0 0 12px;max-width:66ch;color:#333}
+.intro .codeline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:12px 14px;overflow-x:auto;white-space:nowrap;margin:18px 0 14px;color:#4a3a3a}
 .intro .note{color:var(--muted);font-size:13.5px}
 .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:2px 6px}
 
@@ -46,6 +47,8 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .f.on{background:var(--soft);border-color:var(--red);color:var(--red)}
 .count{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
 
+.grp{font-family:Manrope;font-weight:800;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);padding:0 0 14px;margin:clamp(26px,4vw,44px) 0 0;border-top:1px solid var(--line);padding-top:16px}
+.grp.first{margin-top:0;border-top:0;padding-top:0}
 .vtitle{padding:clamp(26px,5vw,52px) var(--pad) 6px}
 .vtitle h2{font-size:clamp(19px,2.6vw,26px);margin:0 0 6px}
 .vtitle p{margin:0;color:var(--muted);max-width:62ch;font-size:14px}
@@ -53,8 +56,13 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .view.on{display:block}
 
 /* ---------- V1 modular grid ---------- */
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.6vw,22px);padding:clamp(18px,3vw,32px) var(--pad) clamp(50px,8vw,110px)}
-.card{grid-column:span 4;position:relative;display:block}
+.grid{padding:clamp(18px,3vw,32px) var(--pad) clamp(50px,8vw,110px)}
+.cols{columns:3;column-gap:var(--gap)}
+.cols .card{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 var(--gap)}
+.card{position:relative;display:block}
+.card.hero{margin-bottom:var(--gap)}
+.card.hero .ph{aspect-ratio:21/9}
+.card.hero .nm{font-size:clamp(18px,2.2vw,26px)}
 .card .ph{position:relative;overflow:hidden;background:var(--soft)}
 .card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .card:hover img{transform:scale(1.045)}
@@ -62,9 +70,6 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .card .nm{font-family:Manrope;font-weight:700;font-size:15px;transition:color .18s}
 .card:hover .nm{color:var(--red)}
 .card .tg{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.card.s-l{grid-column:span 6}
-.card.s-m{grid-column:span 4}
-.card.s-s{grid-column:span 3}
 .card.r-1 .ph{aspect-ratio:1/1}
 .card.r-4 .ph{aspect-ratio:4/3}
 .card.r-3 .ph{aspect-ratio:3/4}
@@ -99,7 +104,6 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .hcard:hover .nm{color:var(--red)}
 .hcard.isnew .ph::after{content:"нова";position:absolute;margin:10px;background:var(--red);color:#fff;font-family:Manrope;font-weight:800;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px}
 .hcard .ph{position:relative}
-.rowlab{position:absolute;left:var(--pad);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .hint{padding:0 var(--pad) 26px;color:var(--muted);font-size:13px}
 .progress{position:absolute;left:var(--pad);right:var(--pad);bottom:34px;height:2px;background:var(--line)}
 .progress i{display:block;height:100%;width:0;background:var(--red)}
@@ -108,8 +112,9 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .foot{border-top:1px solid var(--line);padding:clamp(30px,5vw,60px) var(--pad);color:var(--muted);font-size:13px}
 .foot b{color:var(--ink);font-family:Manrope}
 
+@media (max-width:1100px){ .cols{columns:2} }
 @media (max-width:760px){
-  .card.s-l,.card.s-m,.card.s-s{grid-column:span 6}
+  .cols{columns:1}
   .row{grid-template-columns:34px 1fr;row-gap:6px}
   .row .rl,.row .go{grid-column:2;text-align:left}
   .row .nm{font-size:26px}
@@ -138,6 +143,7 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
   <h1>Три варіанти розкладки на ваших же обкладинках</h1>
   <p>Зараз на сайті картки стоять на координатах: у комерційних 17 квадратів по 238 пікселів з кроком 262, довжина ряду 5499 пікселів. Тому нова робота тягне за собою зсув усіх наступних карток і переналаштування скролу.</p>
   <p>Тут картки лежать у потоці і рахують позиції самі. Натисніть <span class="kbd">+ додати роботу</span> у будь-якому варіанті: нова картка стає на місце, сітка перебудовується, анімація не злітає. У робочій версії додавання виглядає як один рядок у вашому списку.</p>
+  <p class="codeline">{ "назва": "Нова робота", "обкладинка": "cover.jpg", "категорія": "комерційна", "посилання": "/case/nova" }</p>
   <p class="note">Підписи під картками умовні, беруться з назв ваших кейсів. Обкладинки і посилання справжні, з вашого сайту.</p>
 </section>
 
@@ -197,14 +203,15 @@ let works = WORKS.slice();
 let filter = 'all';
 let added = 0;
 
-const SPAN = ['s-l r-w','s-s r-1','s-s r-3','s-m r-1','s-m r-4','s-l r-4','s-s r-1','s-m r-3','s-s r-1'];
+const SPAN = ['r-1','r-3','r-4','r-1','r-w','r-3','r-4','r-1','r-3','r-1','r-w','r-4'];
 const CAT  = {c:'комерційний', s:'соціальний'};
 
 const $ = s => document.querySelector(s);
 const vis = () => works.filter(w => filter === 'all' || w.cat === filter);
 
 function cardHTML(w, i){
-  return `<a class="card ${SPAN[i % SPAN.length]} ${w.isnew?'isnew':''}" href="${w.url}" target="_blank" rel="noopener">
+  const cls = w.hero ? 'hero' : SPAN[(i-1) % SPAN.length];
+  return `<a class="card ${cls} ${w.isnew?'isnew':''}" href="${w.url}" target="_blank" rel="noopener">
     <div class="ph"><img loading="lazy" src="img/${w.img}" alt="${w.title}"></div>
     <div class="meta"><span class="nm">${w.title}</span><span class="tg">${CAT[w.cat]}</span></div>
   </a>`;
@@ -225,10 +232,25 @@ function hcardHTML(w){
   </a>`;
 }
 
-function render(){
+function groups(){
   const v = vis();
-  $('#grid').innerHTML = v.map(cardHTML).join('');
-  $('#list').innerHTML = v.map(rowHTML).join('');
+  if (filter !== 'all') return [{title:null, items:v}];
+  return [
+    {title:'Комерційні проєкти', items:v.filter(w=>w.cat==='c')},
+    {title:'Соціальні проєкти',  items:v.filter(w=>w.cat==='s')}
+  ].filter(g=>g.items.length);
+}
+function render(){
+  const v = vis(), gs = groups();
+  $('#grid').innerHTML = gs.map((g,gi)=>
+    (g.title ? `<h3 class="grp ${gi?'':'first'}">${g.title}</h3>` : '') +
+    (g.items.length ? cardHTML({...g.items[0], hero:true}, 0) +
+      '<div class="cols">' + g.items.slice(1).map((w,i)=>cardHTML(w,i+1)).join('') + '</div>' : '')
+  ).join('');
+  $('#list').innerHTML = gs.map((g,gi)=>
+    (g.title ? `<h3 class="grp ${gi?'':'first'}">${g.title}</h3>` : '') +
+    g.items.map(rowHTML).join('')
+  ).join('');
   const c = works.filter(w => w.cat === 'c' && (filter === 'all' || filter === 'c'));
   const s = works.filter(w => w.cat === 's' && (filter === 'all' || filter === 's'));
   $('#hrow1').innerHTML = (c.length?c:v).map(hcardHTML).join('');
@@ -282,7 +304,8 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   t.classList.add('on');
   document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
   $('#v' + t.dataset.v).classList.add('on');
-  scrollTo({top:0, behavior:'instant'});
+  const vt = $('#v' + t.dataset.v + ' .vtitle');
+  if (vt) scrollTo({top: vt.offsetTop - 70, behavior:'instant'});
   requestAnimationFrame(measure);
 }));
 document.querySelectorAll('.f').forEach(f => f.addEventListener('click', () => {
@@ -300,7 +323,13 @@ $('#add').addEventListener('click', () => {
   if (el.length) el[el.length-1].scrollIntoView({behavior:'smooth', block:'center'});
 });
 
+/* deep link ?v=2 */
+const qv = new URLSearchParams(location.search).get('v');
 render();
+if (qv && ['1','2','3'].includes(qv)) {
+  const t = document.querySelector(`.tab[data-v="${qv}"]`);
+  if (t) t.click();
+}
 </script>
 </body>
 </html>
