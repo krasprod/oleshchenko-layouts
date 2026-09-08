@@ -36,7 +36,7 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
 .intro{padding:clamp(28px,6vw,64px) var(--pad) 8px;max-width:980px}
 .intro h1{font-size:clamp(26px,4.6vw,46px);line-height:1.05;margin:0 0 18px}
 .intro p{margin:0 0 12px;max-width:66ch;color:#333}
-.intro .codeline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:12px 14px;overflow-x:auto;white-space:nowrap;margin:18px 0 14px;color:#4a3a3a}
+.intro .codeline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:12px 14px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;margin:18px 0 14px;color:#4a3a3a}
 .intro .note{color:var(--muted);font-size:13.5px}
 .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--soft);padding:2px 6px}
 
@@ -143,7 +143,7 @@ h1,h2,h3,.disp{font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spaci
   <h1>Три варіанти розкладки на ваших же обкладинках</h1>
   <p>Зараз на сайті картки стоять на координатах: у комерційних 17 квадратів по 238 пікселів з кроком 262, довжина ряду 5499 пікселів. Тому нова робота тягне за собою зсув усіх наступних карток і переналаштування скролу.</p>
   <p>Тут картки лежать у потоці і рахують позиції самі. Натисніть <span class="kbd">+ додати роботу</span> у будь-якому варіанті: нова картка стає на місце, сітка перебудовується, анімація не злітає. У робочій версії додавання виглядає як один рядок у вашому списку.</p>
-  <p class="codeline">{ "назва": "Нова робота", "обкладинка": "cover.jpg", "категорія": "комерційна", "посилання": "/case/nova" }</p>
+  <p class="codeline">{ "назва": "Нова робота", "обкладинка": "cover.jpg", "категорія": "комерційна" }</p>
   <p class="note">Підписи під картками умовні, беруться з назв ваших кейсів. Обкладинки і посилання справжні, з вашого сайту.</p>
 </section>
 
